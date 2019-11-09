@@ -8,10 +8,6 @@
             {{method_field('PATCH')}}
             <button type="submit" name="button">test formularzowy</button>
         </form> --}}
-        <p>to do:</p>
-        <ul>
-            <li>upgrade</li>
-            <li> max,magazyn</li>
-        </ul>
+        
     </div>
 @endsection
