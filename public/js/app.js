@@ -1840,7 +1840,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.patch('reset');
     },
     refresh: function refresh() {
-      axios.patch('update');
+      axios.patch('update').then(function (res) {
+        return console.log('poszedł update');
+      });
       this.getData();
     },
     getData: function getData() {

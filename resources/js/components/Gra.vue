@@ -103,7 +103,7 @@ export default {
             axios.patch('reset');
         },
         refresh(){
-            axios.patch('update');
+            axios.patch('update').then((res)=>console.log('poszedł update'));
             this.getData();
         },
         getData(){
