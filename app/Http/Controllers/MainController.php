@@ -7,6 +7,7 @@ use App\User;
 use App\Stat;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
