@@ -103,9 +103,9 @@ export default {
             axios.patch('reset');
         },
         refresh(){
+            let self = this;
             console.log('update');
-            axios.patch('update').then((res)=>console.log('poszedł update'));
-            this.getData();
+            axios.patch('update').then((res)=>self.getData());
         },
         getData(){
             let self = this;
