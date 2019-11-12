@@ -1877,6 +1877,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var self = this; // this.reset();
 
+    console.log('1');
     this.refresh(); // this.getData();
   }
 });

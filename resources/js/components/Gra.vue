@@ -130,6 +130,7 @@ export default {
     mounted(){
         let self = this;
         // this.reset();
+        console.log('1');
         this.refresh();
         // this.getData();
     }
