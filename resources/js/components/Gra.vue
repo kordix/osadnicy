@@ -129,8 +129,8 @@ export default {
     mounted(){
         let self = this;
         // this.reset();
-        // this.refresh();
-        this.getData();
+        this.refresh();
+        // this.getData();
     }
 }
 </script>
