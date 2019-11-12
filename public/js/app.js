@@ -1800,6 +1800,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _axios$patch;
 
       console.log('upgrade');
+      var self = this;
       var kosztwood = this.costs[mine + 'Upgrade'][0];
       var kosztstone = this.costs[mine + 'Upgrade'][1];
       var kosztiron = this.costs[mine + 'Upgrade'][2];
@@ -1814,8 +1815,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var ironcalc = this.dane.iron - kosztiron;
       var levelcalc = this.dane[mine + 'Level'] + 1;
       var factorcalc = levelcalc * 0.01;
-      axios.patch('upgrade', (_axios$patch = {}, _defineProperty(_axios$patch, mine + 'Level', levelcalc), _defineProperty(_axios$patch, "wood", woodcalc), _defineProperty(_axios$patch, "stone", stonecalc), _defineProperty(_axios$patch, "iron", ironcalc), _defineProperty(_axios$patch, mine + 'factor', factorcalc), _axios$patch));
-      this.refresh();
+      axios.patch('upgrade', (_axios$patch = {}, _defineProperty(_axios$patch, mine + 'Level', levelcalc), _defineProperty(_axios$patch, "wood", woodcalc), _defineProperty(_axios$patch, "stone", stonecalc), _defineProperty(_axios$patch, "iron", ironcalc), _defineProperty(_axios$patch, mine + 'factor', factorcalc), _axios$patch)).then(function (res) {
+        return self.refresh();
+      });
     },
     upgradeMag: function upgradeMag(res) {
       var _axios$patch2;

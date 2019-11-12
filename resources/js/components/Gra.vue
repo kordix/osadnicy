@@ -66,6 +66,7 @@ export default {
     methods:{
         upgrade(mine){
             console.log('upgrade');
+            let self = this;
             let kosztwood = this.costs[mine+'Upgrade'][0];
             let kosztstone = this.costs[mine+'Upgrade'][1];
             let kosztiron = this.costs[mine+'Upgrade'][2];
@@ -82,8 +83,7 @@ export default {
             let factorcalc = levelcalc * 0.01;
 
 
-            axios.patch('upgrade',{[mine+'Level']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc,[mine+'factor']:factorcalc});
-            this.refresh();
+            axios.patch('upgrade',{[mine+'Level']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc,[mine+'factor']:factorcalc}).then((res)=>self.refresh());
         },
         upgradeMag(res){
             if(this.dane.wood < kosztwood){
