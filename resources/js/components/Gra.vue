@@ -104,12 +104,13 @@ export default {
         },
         refresh(){
             let self = this;
-            console.log('update');
-            axios.patch('update').then((res)=>self.getData());
+            console.log('puszczamy update');
+            axios.patch('update').then((res)=>console.log('update ukończony')).then((res)=>self.getData());
         },
         getData(){
+            console.log('ściągamy dane');
             let self = this;
-            axios.get('statdata').then((res)=>self.dane = res.data[0]).then((res)=>self.checkMax());
+            axios.get('statdata').then((res)=>self.dane = res.data[0]).then((res)=>console.log('dane ściągniete')).then((res)=>self.checkMax());
         },
         checkMax(){
             let self = this;

@@ -1841,15 +1841,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     refresh: function refresh() {
       var self = this;
-      console.log('update');
+      console.log('puszczamy update');
       axios.patch('update').then(function (res) {
+        return console.log('update ukończony');
+      }).then(function (res) {
         return self.getData();
       });
     },
     getData: function getData() {
+      console.log('ściągamy dane');
       var self = this;
       axios.get('statdata').then(function (res) {
         return self.dane = res.data[0];
+      }).then(function (res) {
+        return console.log('dane ściągniete');
       }).then(function (res) {
         return self.checkMax();
       });
