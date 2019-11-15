@@ -65,7 +65,6 @@ export default {
     },
     methods:{
         upgrade(mine){
-            console.log('upgrade');
             let self = this;
             let kosztwood = this.costs[mine+'Upgrade'][0];
             let kosztstone = this.costs[mine+'Upgrade'][1];
@@ -82,14 +81,12 @@ export default {
             let levelcalc = this.dane[mine+'Level']+1;
             let factorcalc = levelcalc * 0.01;
 
-
-            axios.patch('upgrade',{[mine+'Level']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc,[mine+'factor']:factorcalc}).then((res)=>self.refresh());
+            console.log('puszczamy upgrade');
+            axios.patch('upgrade',{[mine+'Level']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc,[mine+'factor']:factorcalc}).then((res)=>console.log('puszczony upgrade')).then((res)=>self.getData());
         },
         upgradeMag(res){
-            if(this.dane.wood < kosztwood){
-                console.log('nie stać cię');
-                return
-            }
+            let self = this;
+
             let kosztwood = 100;
             let kosztstone = 100;
             let kosztiron = 100;
@@ -97,7 +94,12 @@ export default {
             let stonecalc = this.dane.stone - kosztstone;
             let ironcalc = this.dane.iron - kosztiron;
             let levelcalc=this.dane[res+'Store']+1;
-            axios.patch('upgrade',{[res+'Store']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc});
+            if(parseInt(self.dane.wood) < parseInt(kosztwood)){
+                console.log('nie stać cię');
+                return
+            }
+            console.log('upgradeujemy magazyn');
+            axios.patch('upgrade',{[res+'Store']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc}).then((res)=>console.log('poszedł upgrade magazynu')).then((res)=>self.getData());
         },
         reset(){
             axios.patch('reset');
@@ -125,6 +127,11 @@ export default {
                 }
 
             }
+        },
+        resHack(){
+            this.dane.wood=300;
+            this.dane.stone=300;
+            this.dane.iron=300;
         }
     },
     mounted(){
