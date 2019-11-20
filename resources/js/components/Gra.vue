@@ -14,6 +14,9 @@
                 Żelazo:{{dane.iron}}
             </div>
             <div class="col-md-2">
+                Złoto:{{dane.gold}}
+            </div>
+            <div class="col-md-2">
                 <button type="button" name="button" @click="refresh">refresh</button>
             </div>
         </div>
@@ -36,6 +39,12 @@
         <p>Magazyn drewna: Max {{dane.woodStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('wood')">Upgrade</button> </p>
         <p>Magazyn kamienia: Max {{dane.stoneStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('stone')">Upgrade</button> </p>
         <p>Magazyn rudy: Max {{dane.ironStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('iron')">Upgrade</button> </p>
+    </div>
+    <div class="">
+        <p>Twój bohater</p>
+        <p>Level 1</p>
+        <button type="button" name="button" @click="quest">Idź na questa (2h)</button>
+        <p v-if="dane.heroQuest=='1'">Bohater jest na queście, wróci za  {{diffDaty}}</p>
     </div>
 </div>
 
@@ -69,37 +78,32 @@ export default {
             let kosztwood = this.costs[mine+'Upgrade'][0];
             let kosztstone = this.costs[mine+'Upgrade'][1];
             let kosztiron = this.costs[mine+'Upgrade'][2];
-
-            if(this.dane.wood < kosztwood){
-                console.log('nie stać cię');
+            if(this.pay(kosztwood,kosztstone,kosztiron)==false){
+                console.log('działa zwrot');
                 return
             }
 
-            let woodcalc = this.dane.wood - kosztwood;
-            let stonecalc = this.dane.stone - kosztstone;
-            let ironcalc = this.dane.iron - kosztiron;
             let levelcalc = this.dane[mine+'Level']+1;
             let factorcalc = levelcalc * 0.01;
 
             console.log('puszczamy upgrade');
-            axios.patch('upgrade',{[mine+'Level']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc,[mine+'factor']:factorcalc}).then((res)=>console.log('puszczony upgrade')).then((res)=>self.getData());
+            axios.patch('upgrade',{[mine+'Level']:levelcalc,[mine+'factor']:factorcalc}).then((res)=>console.log('puszczony upgrade')).then((res)=>self.getData());
         },
         upgradeMag(res){
             let self = this;
 
-            let kosztwood = 100;
-            let kosztstone = 100;
-            let kosztiron = 100;
-            let woodcalc = this.dane.wood - kosztwood;
-            let stonecalc = this.dane.stone - kosztstone;
-            let ironcalc = this.dane.iron - kosztiron;
             let levelcalc=this.dane[res+'Store']+1;
-            if(parseInt(self.dane.wood) < parseInt(kosztwood)){
-                console.log('nie stać cię');
+
+            if(this.pay(100,100,100)==false){
+                console.log('działa zwrot');
                 return
             }
-            console.log('upgradeujemy magazyn');
-            axios.patch('upgrade',{[res+'Store']:levelcalc,wood:woodcalc,stone:stonecalc,iron:ironcalc}).then((res)=>console.log('poszedł upgrade magazynu')).then((res)=>self.getData());
+
+            axios.patch('upgrade',{[res+'Store']:levelcalc}).then((res)=>console.log('poszedł upgrade magazynu')).then((res)=>self.getData());
+
+        },
+        test2(){
+                return 'dupa';
         },
         reset(){
             axios.patch('reset');
@@ -132,14 +136,56 @@ export default {
             this.dane.wood=300;
             this.dane.stone=300;
             this.dane.iron=300;
+        },
+        pay(woodcost,stonecost,ironcost){
+            if(this.dane.wood < woodcost){
+                console.log('nie stać cię');
+                return false
+            }
+            if(this.dane.stone < stonecost){
+                console.log('nie stać cię');
+                return false
+            }
+            if(this.dane.ironcost < ironcost){
+                console.log('nie stać cię');
+                return false
+            }
+
+            let woodcalc = this.dane.wood - woodcost;
+            let stonecalc = this.dane.stone - stonecost;
+            let ironcalc = this.dane.iron - ironcost;
+            axios.patch('upgrade',{wood:woodcalc,stone:stonecalc,iron:ironcalc}).then((res)=>console.log('zapłacono'));
+        },
+
+        quest(){
+            let self = this;
+            let date1 = new Date(this.dane.questTime);
+            let date2 = new Date(this.dane.questDTime);
+            if (date2 > date1) {
+                console.log('quest ukończony');
+            }
+            // return data1+data2;
+            axios.patch('/quest').then((res)=>self.getData());
+            var timeDiff = Math.abs(date2.getTime() - date1.getTime())/1000;
+            console.log(timeDiff);
         }
     },
     mounted(){
         let self = this;
-        // this.reset();
         console.log('1');
         this.refresh();
-        // this.getData();
+    },
+    computed:{
+        diffDaty(){
+            let date1 = new Date(this.dane.questTime);
+            let date2 = new Date(this.dane.questDTime);
+            let timeDiff = Math.abs(date2.getTime() - date1.getTime())/1000 ;
+            return timeDiff;
+            // return //;
+        },
+        date1(){
+            return new Date(this.dane.questTime);
+        }
     }
 }
 </script>

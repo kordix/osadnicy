@@ -1775,6 +1775,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1804,46 +1813,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var kosztstone = this.costs[mine + 'Upgrade'][1];
       var kosztiron = this.costs[mine + 'Upgrade'][2];
 
-      if (this.dane.wood < kosztwood) {
-        console.log('nie stać cię');
+      if (this.pay(kosztwood, kosztstone, kosztiron) == false) {
+        console.log('działa zwrot');
         return;
       }
 
-      var woodcalc = this.dane.wood - kosztwood;
-      var stonecalc = this.dane.stone - kosztstone;
-      var ironcalc = this.dane.iron - kosztiron;
       var levelcalc = this.dane[mine + 'Level'] + 1;
       var factorcalc = levelcalc * 0.01;
       console.log('puszczamy upgrade');
-      axios.patch('upgrade', (_axios$patch = {}, _defineProperty(_axios$patch, mine + 'Level', levelcalc), _defineProperty(_axios$patch, "wood", woodcalc), _defineProperty(_axios$patch, "stone", stonecalc), _defineProperty(_axios$patch, "iron", ironcalc), _defineProperty(_axios$patch, mine + 'factor', factorcalc), _axios$patch)).then(function (res) {
+      axios.patch('upgrade', (_axios$patch = {}, _defineProperty(_axios$patch, mine + 'Level', levelcalc), _defineProperty(_axios$patch, mine + 'factor', factorcalc), _axios$patch)).then(function (res) {
         return console.log('puszczony upgrade');
       }).then(function (res) {
         return self.getData();
       });
     },
     upgradeMag: function upgradeMag(res) {
-      var _axios$patch2;
-
       var self = this;
-      var kosztwood = 100;
-      var kosztstone = 100;
-      var kosztiron = 100;
-      var woodcalc = this.dane.wood - kosztwood;
-      var stonecalc = this.dane.stone - kosztstone;
-      var ironcalc = this.dane.iron - kosztiron;
       var levelcalc = this.dane[res + 'Store'] + 1;
 
-      if (parseInt(self.dane.wood) < parseInt(kosztwood)) {
-        console.log('nie stać cię');
+      if (this.pay(100, 100, 100) == false) {
+        console.log('działa zwrot');
         return;
       }
 
-      console.log('upgradeujemy magazyn');
-      axios.patch('upgrade', (_axios$patch2 = {}, _defineProperty(_axios$patch2, res + 'Store', levelcalc), _defineProperty(_axios$patch2, "wood", woodcalc), _defineProperty(_axios$patch2, "stone", stonecalc), _defineProperty(_axios$patch2, "iron", ironcalc), _axios$patch2)).then(function (res) {
+      axios.patch('upgrade', _defineProperty({}, res + 'Store', levelcalc)).then(function (res) {
         return console.log('poszedł upgrade magazynu');
       }).then(function (res) {
         return self.getData();
       });
+    },
+    test2: function test2() {
+      return 'dupa';
     },
     reset: function reset() {
       axios.patch('reset');
@@ -1886,13 +1886,66 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.dane.wood = 300;
       this.dane.stone = 300;
       this.dane.iron = 300;
+    },
+    pay: function pay(woodcost, stonecost, ironcost) {
+      if (this.dane.wood < woodcost) {
+        console.log('nie stać cię');
+        return false;
+      }
+
+      if (this.dane.stone < stonecost) {
+        console.log('nie stać cię');
+        return false;
+      }
+
+      if (this.dane.ironcost < ironcost) {
+        console.log('nie stać cię');
+        return false;
+      }
+
+      var woodcalc = this.dane.wood - woodcost;
+      var stonecalc = this.dane.stone - stonecost;
+      var ironcalc = this.dane.iron - ironcost;
+      axios.patch('upgrade', {
+        wood: woodcalc,
+        stone: stonecalc,
+        iron: ironcalc
+      }).then(function (res) {
+        return console.log('zapłacono');
+      });
+    },
+    quest: function quest() {
+      var self = this;
+      var date1 = new Date(this.dane.questTime);
+      var date2 = new Date(this.dane.questDTime);
+
+      if (date2 > date1) {
+        console.log('quest ukończony');
+      } // return data1+data2;
+
+
+      axios.patch('/quest').then(function (res) {
+        return self.getData();
+      });
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime()) / 1000;
+      console.log(timeDiff);
     }
   },
   mounted: function mounted() {
-    var self = this; // this.reset();
-
+    var self = this;
     console.log('1');
-    this.refresh(); // this.getData();
+    this.refresh();
+  },
+  computed: {
+    diffDaty: function diffDaty() {
+      var date1 = new Date(this.dane.questTime);
+      var date2 = new Date(this.dane.questDTime);
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime()) / 1000;
+      return timeDiff; // return //;
+    },
+    date1: function date1() {
+      return new Date(this.dane.questTime);
+    }
   }
 });
 
@@ -37926,6 +37979,14 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-2" }, [
+          _vm._v(
+            "\n                Złoto:" +
+              _vm._s(_vm.dane.gold) +
+              "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2" }, [
           _c(
             "button",
             {
@@ -38118,6 +38179,24 @@ var render = function() {
           [_vm._v("Upgrade")]
         )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", {}, [
+      _c("p", [_vm._v("Twój bohater")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Level 1")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { attrs: { type: "button", name: "button" }, on: { click: _vm.quest } },
+        [_vm._v("Idź na questa (2h)")]
+      ),
+      _vm._v(" "),
+      _vm.dane.heroQuest == "1"
+        ? _c("p", [
+            _vm._v("Bohater jest na queście, wróci za  " + _vm._s(_vm.diffDaty))
+          ])
+        : _vm._e()
     ])
   ])
 }

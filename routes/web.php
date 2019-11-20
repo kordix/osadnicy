@@ -20,7 +20,10 @@ Route::patch('update', 'MainController@updatestats')->name('test') ;
 Route::get('statdata','MainController@getStats');
 
 Route::patch('upgrade', 'MainController@upgrade');
+Route::patch('quest', 'heroController@quest');
+
+
+
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
