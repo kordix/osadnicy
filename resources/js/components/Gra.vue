@@ -1,45 +1,7 @@
 <template>
     <div class="" v-cloak>
-
-    <div class="">
-        <p>tu będzie gra</p>
-        <div class="row">
-            <div class="col-md-2">
-                Drewno:{{dane.wood}}
-            </div>
-            <div class="col-md-2">
-                Kamień:{{dane.stone}}
-            </div>
-            <div class="col-md-2">
-                Żelazo:{{dane.iron}}
-            </div>
-            <div class="col-md-2">
-                Złoto:{{dane.gold}}
-            </div>
-            <div class="col-md-2">
-                <button type="button" name="button" @click="refresh">refresh</button>
-            </div>
-        </div>
-    </div>
-    <div class="">
-        <p>Twoja wioska</p>
-        <p>Tartak:<span style="font-size:20px" v-for="(level,index) in dane.woodLevel">•</span><span>
-            Produkcja: {{dane.woodfactor * 3600 }}/h</span>
-            <button @click="upgrade('wood')">Upgrade ({{costs.woodUpgrade[0]}}D {{costs.woodUpgrade[1]}}K {{costs.woodUpgrade[2]}}Ż)</button>
-        </p>
-        <p>Kamieniołom:<span style="font-size:20px" v-for="(level,index) in dane.stoneLevel">•</span>
-            <span>Produkcja: {{dane.stonefactor * 3600}}/h </span>
-            <button @click="upgrade('stone')" >Upgrade  ({{costs.stoneUpgrade[0]}}D {{costs.stoneUpgrade[1]}}K {{costs.stoneUpgrade[2]}}Ż)</button>
-        </p>
-        <p>Kopalnia rudy:<span style="font-size:20px" v-for="(level,index) in dane.ironLevel">•</span>
-            <span>Produkcja: {{dane.ironfactor * 3600}}/h </span>
-            <button @click="upgrade('iron')" >Upgrade  ({{costs.ironUpgrade[0]}}D {{costs.ironUpgrade[1]}}K {{costs.ironUpgrade[2]}}Ż)</button>
-        </p>
-        </p>
-        <p>Magazyn drewna: Max {{dane.woodStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('wood')">Upgrade</button> </p>
-        <p>Magazyn kamienia: Max {{dane.stoneStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('stone')">Upgrade</button> </p>
-        <p>Magazyn rudy: Max {{dane.ironStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('iron')">Upgrade</button> </p>
-    </div>
+    <resourcetab></resourcetab>
+    <wioska></wioska>
     <div class="">
         <p>Twój bohater</p>
         <p>Level 1</p>
@@ -56,18 +18,10 @@ export default {
         return {
             dane:{},
             test:'asdfsiemano',
-            // sawmillLevel:1,
-            // mineLevel:1,
-            // quarryLevel:1,
             costs:{
                 woodUpgrade:[150,100,100],
                 ironUpgrade:[150,50,100],
                 stoneUpgrade:[100,100,100],
-            },
-            magazyny:{
-                wood:1,
-                stone:1,
-                iron:1
             }
 
         }
@@ -139,15 +93,12 @@ export default {
         },
         pay(woodcost,stonecost,ironcost){
             if(this.dane.wood < woodcost){
-                console.log('nie stać cię');
                 return false
             }
             if(this.dane.stone < stonecost){
-                console.log('nie stać cię');
                 return false
             }
             if(this.dane.ironcost < ironcost){
-                console.log('nie stać cię');
                 return false
             }
 

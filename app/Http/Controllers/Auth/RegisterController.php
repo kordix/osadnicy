@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
     }
 
     /**
@@ -75,7 +75,7 @@ class RegisterController extends Controller
         $id = $data->id;
         Stat::create(['user_id'=>$id]);
 
-
+        return redirect('/login');
 
     }
 }
