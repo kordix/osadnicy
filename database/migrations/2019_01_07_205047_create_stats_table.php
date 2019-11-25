@@ -16,9 +16,9 @@ class CreateStatsTable extends Migration
         Schema::create('stats', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->float('wood')->default(100);
-            $table->float('stone')->default(0);
-            $table->float('iron')->default(0);
+            $table->float('wood')->default(200);
+            $table->float('stone')->default(200);
+            $table->float('iron')->default(200);
             $table->float('gold')->default(0);
             $table->float('woodLevel')->default(1);
             $table->float('stoneLevel')->default(1);

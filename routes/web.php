@@ -19,6 +19,11 @@ Route::patch('reset', 'MainController@reset')->name('reset');
 Route::patch('update', 'MainController@updatestats')->name('test') ;
 Route::get('statdata','MainController@getStats');
 
+Route::get('test',function(){
+    return redirect('login');
+});
+
+
 Route::patch('upgrade', 'MainController@upgrade');
 Route::patch('quest', 'heroController@quest');
 

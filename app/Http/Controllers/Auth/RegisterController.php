@@ -75,7 +75,7 @@ class RegisterController extends Controller
         $id = $data->id;
         Stat::create(['user_id'=>$id]);
 
-        return redirect('/login');
+        return redirect('login');
 
     }
 }
