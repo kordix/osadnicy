@@ -1,9 +1,10 @@
 <template>
     <div class="">
-        <p>Twoja wioska</p>
+        <p>Twoja wioska  <span style="display:inline-block;margin-left:20px;color:red" v-if="log !=''" @click="log = ''">{{log}}</span> </p>
+
         <p>Tartak:<span style="font-size:20px" v-for="(level,index) in dane.woodLevel">•</span><span>
             Produkcja: {{dane.woodfactor * 3600 }}/h</span>
-            <button @click="test()">Upgrade ({{costs.woodUpgrade[0]}}D {{costs.woodUpgrade[1]}}K {{costs.woodUpgrade[2]}}Ż)</button>
+            <button @click="upgrade('wood')">Upgrade ({{costs.woodUpgrade[0]}}D {{costs.woodUpgrade[1]}}K {{costs.woodUpgrade[2]}}Ż)</button>
         </p>
         <p>Kamieniołom:<span style="font-size:20px" v-for="(level,index) in dane.stoneLevel">•</span>
             <span>Produkcja: {{dane.stonefactor * 3600}}/h </span>
@@ -14,7 +15,7 @@
             <button @click="upgrade('iron')" >Upgrade  ({{costs.ironUpgrade[0]}}D {{costs.ironUpgrade[1]}}K {{costs.ironUpgrade[2]}}Ż)</button>
         </p>
         </p>
-        <p>Magazyn drewna: Max {{dane.woodStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('wood')">Upgrade</button> </p>
+        <p>Magazyn drewna: Max {{dane.woodStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('wood')">Upgrade</button><span style="font-size:10px"> Upgrade magazynów 100 każdego surowca </span></p>
         <p>Magazyn kamienia: Max {{dane.stoneStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('stone')">Upgrade</button> </p>
         <p>Magazyn rudy: Max {{dane.ironStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('iron')">Upgrade</button> </p>
     </div>
@@ -33,12 +34,13 @@ export default {
                 woodUpgrade:[150,100,100],
                 ironUpgrade:[150,50,100],
                 stoneUpgrade:[100,100,100],
-            }
+            },
+            log:''
         }
     },
     computed:{
         ...mapState({
-            dane: 'dane',
+            dane: 'dane'
         })
     },
     mounted(){
@@ -89,12 +91,17 @@ export default {
         },
         pay(woodcost,stonecost,ironcost){
             if(this.dane.wood < woodcost){
+                this.log='Brakuje ci drewna';
                 return false
             }
             if(this.dane.stone < stonecost){
+                this.log = 'Brakuje ci kamienia';
+
                 return false
             }
             if(this.dane.ironcost < ironcost){
+                this.log = 'Brakuje ci żelaza' ;
+
                 return false
             }
 

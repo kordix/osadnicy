@@ -2,12 +2,7 @@
     <div class="" v-cloak>
     <resourcetab></resourcetab>
     <wioska></wioska>
-    <div class="">
-        <p>Twój bohater</p>
-        <p>Level 1</p>
-        <button type="button" name="button" @click="quest">Idź na questa (2h)</button>
-        <p v-if="dane.heroQuest=='1'">Bohater jest na queście, wróci za  {{diffDaty}}</p>
-    </div>
+    <hero></hero>
 </div>
 
 </template>
@@ -108,18 +103,7 @@ export default {
             axios.patch('upgrade',{wood:woodcalc,stone:stonecalc,iron:ironcalc}).then((res)=>console.log('zapłacono'));
         },
 
-        quest(){
-            let self = this;
-            let date1 = new Date(this.dane.questTime);
-            let date2 = new Date(this.dane.questDTime);
-            if (date2 > date1) {
-                console.log('quest ukończony');
-            }
-            // return data1+data2;
-            axios.patch('/quest').then((res)=>self.getData());
-            var timeDiff = Math.abs(date2.getTime() - date1.getTime())/1000;
-            console.log(timeDiff);
-        }
+
     },
     mounted(){
         let self = this;
@@ -127,16 +111,7 @@ export default {
         this.refresh();
     },
     computed:{
-        diffDaty(){
-            let date1 = new Date(this.dane.questTime);
-            let date2 = new Date(this.dane.questDTime);
-            let timeDiff = Math.abs(date2.getTime() - date1.getTime())/1000 ;
-            return timeDiff;
-            // return //;
-        },
-        date1(){
-            return new Date(this.dane.questTime);
-        }
+
     }
 }
 </script>

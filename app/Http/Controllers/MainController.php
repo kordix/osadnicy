@@ -35,7 +35,11 @@ class MainController extends Controller
 
     public function upgrade(Request $request){
         $id = Auth::id();
+        Stat::find($id)->update($request->all());
+    }
 
+    public function changedata(Request $request){
+        $id = Auth::id();
         Stat::find($id)->update($request->all());
     }
 

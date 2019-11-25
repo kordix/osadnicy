@@ -26,6 +26,8 @@ Vue.use(Vuex);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('resourcetab', require('./components/ResourceTab.vue').default);
 Vue.component('wioska', require('./components/Wioska.vue').default);
+Vue.component('hero', require('./components/Hero.vue').default);
+
 
 
 Vue.component('gra', require('./components/Gra.vue').default);
@@ -41,15 +43,17 @@ Vue.component('gra', require('./components/Gra.vue').default);
      state:{
          dane:{},
          test:'test',
-         coins:null
+         coins:null,
+         log:''
      },
      actions:{
          loadData(context){
              axios.get('statdata').then(r=>r.data).then((res) => context.commit('loadData',res[0]));
          },
-         updateResources(){
-             axios.patch('update').then((res)=>console.log('update ukończony')).then((res)=>self.getData());
-         }
+         updateResources(context){
+             let self = this;
+             axios.patch('update').then((res)=>console.log('update ukończony')).then((res)=>context.dispatch('loadData'));
+         },
          // ,checkMax(){
          //     let self = this;
          //     let resources=['wood','stone','iron'];

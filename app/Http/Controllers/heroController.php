@@ -15,10 +15,9 @@ class heroController extends Controller
 {
     public function quest(){
         $id=Auth::id();
-
-        $time = Carbon::now();
-        $time2 = Carbon::now();
-        $modifiedMutable = $time2->addMinutes(5);
+        $time = Carbon::now(new \DateTimeZone('Europe/Zagreb'));
+        $time2 = Carbon::now(new \DateTimeZone('Europe/Zagreb'));
+        $modifiedMutable = $time2->addMinutes(1);
 
         Stat::find($id)->update(['questTime'=>$time,'questDTime'=>$modifiedMutable,'heroQuest'=>1]);
 

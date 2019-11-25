@@ -13,7 +13,7 @@
             Złoto:{{dane.gold}}
         </div>
         <div class="col-md-2">
-            <button type="button" name="button" >refresh</button>
+            <button type="button" name="button" @click="updateResources">refresh</button>
         </div>
         <p></p>
     </div>
@@ -21,6 +21,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import { mapActions } from 'vuex';
+
 
 export default {
     data(){
@@ -35,6 +37,12 @@ export default {
     },
     mounted(){
 
+    },
+    methods:{
+        ...mapActions({
+            loadData:'loadData',
+            updateResources:'updateResources'
+        })
     }
 }
 </script>

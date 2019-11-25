@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Carbon\Carbon;
+
 
 Route::get('/', 'MainController@index')->name('index');
 Route::get('/edit', 'MainController@edit')->name('edit');
@@ -23,8 +25,16 @@ Route::get('test',function(){
     return redirect('login');
 });
 
+Route::get('time',function(){
+        $time = Carbon::now(new DateTimeZone('Europe/Zagreb'));
+
+        return $time;
+});
+
 
 Route::patch('upgrade', 'MainController@upgrade');
+Route::patch('changedata', 'MainController@changedata');
+
 Route::patch('quest', 'heroController@quest');
 
 
