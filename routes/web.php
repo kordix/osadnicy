@@ -37,7 +37,7 @@ Route::patch('changedata', 'MainController@changedata');
 
 Route::patch('quest', 'heroController@quest');
 
-
+Route::view('test','test');
 
 
 Auth::routes();
