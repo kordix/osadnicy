@@ -36,7 +36,8 @@ export default {
         })
     },
     mounted(){
-
+        this.loadData();
+        this.updateResources();
     },
     methods:{
         ...mapActions({

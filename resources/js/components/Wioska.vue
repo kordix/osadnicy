@@ -1,12 +1,23 @@
 <template>
     <div class="">
-        <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="afsadfs">Click to toggle popover</button>
+        <!-- <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="afsadfs">Click to toggle popover</button> -->
         <p>Twoja wioska  <span style="display:inline-block;margin-left:20px;color:red" v-if="log !=''" @click="log = ''">{{log}}</span> </p>
         <div id="wioska" style="background:url('images/pole.png');background-size:contain;width:500px;height:500px;position:relative">
-            <div id="drewMine" style="width:100px;height:100px;left:50px;top:50px;" v-bind:style="{ 'background-image': 'url(' + 'images/wood'+dane.woodLevel+'.png)' }"></div>
-            <div id="stoneMine" style="width:100px;height:100px;left:200px;top:50px;" v-bind:style="{ 'background-image': 'url(' + 'images/stone'+dane.stoneLevel+'.png)' }"></div>
-            <div id="ironMine" style="width:100px;height:100px;left:200px;top:200px;" v-bind:style="{ 'background-image': 'url(' + 'images/iron'+dane.ironLevel+'.png)' }"></div>
-            <div id="drewMag" style="width:90px;height:90px;left:50px;top:400px" v-bind:style="{ 'background-image': 'url(' + 'images/Mag'+dane.woodStore+'.png)' }" >
+            <building :attr="'wood'" :left="50" :top="50" :width="100"></building>
+            <building :attr="'stone'" :left="200" :top="50" :width="100"></building>
+            <building :attr="'iron'" :left="200" :top="200" :width="100"></building>
+            <magazyn :attr="'wood'" :left="50" :top="350" :width="90"></magazyn>
+            <magazyn :attr="'stone'" :left="150" :top="350" :width="90"></magazyn>
+            <magazyn :attr="'iron'" :left="250" :top="350" :width="90"></magazyn>
+
+
+            
+
+
+
+
+
+            <!-- <div id="drewMag" style="width:90px;height:90px;left:50px;top:400px" v-bind:style="{ 'background-image': 'url(' + 'images/Mag'+dane.woodStore+'.png)' }" >
                 <div id="ikonadrew" class="woodIcon" style="background-image:url(images/wood.png);"></div>
             </div>
             <div id="stoneMag" style="width:90px;height:90px;left:150px;top:400px" v-bind:style="{ 'background-image': 'url(' + 'images/Mag'+dane.stoneStore+'.png)' }" >
@@ -15,7 +26,7 @@
             </div>
             <div id="ironMag" style="width:90px;height:90px;left:250px;top:400px" v-bind:style="{ 'background-image': 'url(' + 'images/Mag'+dane.ironStore+'.png)' }" >
                 <div id="ikonairon" class="stoneIcon" style="background-image:url(images/iron.png);"></div>
-            </div>
+            </div> -->
         </div>
 
         <p>Tartak:<span style="font-size:20px" v-for="(level,index) in dane.woodLevel">•</span><span>
@@ -35,7 +46,7 @@
         <p>Magazyn kamienia: Max {{dane.stoneStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('stone')">Upgrade</button> </p>
         <p>Magazyn rudy: Max {{dane.ironStore * 100 +200}} <button type="button" name="button" @click="upgradeMag('iron')">Upgrade</button> </p>
         <!-- <popover></popover> -->
-        <popover>asdfasdf</popover>
+        <!-- <popover>asdfasdf</popover> -->
 
     </div>
 </template>
@@ -50,17 +61,18 @@ import { mapActions } from 'vuex';
 export default {
     data(){
         return {
-            costs:{
-                woodUpgrade:[150,100,100],
-                ironUpgrade:[150,50,100],
-                stoneUpgrade:[100,100,100],
-            },
+            // costs:{
+            //     woodUpgrade:[150,100,100],
+            //     ironUpgrade:[150,50,100],
+            //     stoneUpgrade:[100,100,100],
+            // },
             log:''
         }
     },
     computed:{
         ...mapState({
-            dane: 'dane'
+            dane: 'dane',
+            costs:'costs'
         })
     },
     mounted(){

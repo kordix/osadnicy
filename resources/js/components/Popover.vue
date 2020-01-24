@@ -1,13 +1,15 @@
 <template>
-<div class="elem popover fade show bs-popover-right"  id="popover478368" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(414px, 123px, 0px);">
+<div class="popover fade show bs-popover-right"  id="popover478368" style="position: absolute; will-change: transform;" :style="{top:$parent.top+'px',left:$parent.left+90+'px'} ">
     <div class="arrow" style="top: 22px;"></div>
-    <h3 class="popover-header">Popover title</h3>
+    <h4 class="popover-header">{{$parent.popheader}}</h4>
     <div class="popover-body"><slot></slot></div>
 </div>
 </template>
 
 <script>
-export default {}
+export default {
+
+}
 </script>
 
 <style scoped>
@@ -16,7 +18,7 @@ position: absolute;
 will-change: transform;
 top: 0px;
 left: 0px;
-transform: translate3d(414px, 113px, 0px);
+/* transform: translate3d(0px, 0px, 0px); */
 }
 
 .popover-header {
@@ -34,12 +36,14 @@ border-top-right-radius: calc(0.3rem - 1px);
 }
 
 .popover {
+    cursor:pointer;
+    width:200px;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1060;
     display: block;
-    max-width: 276px;
+    max-width: 400px;
     font-family: "Nunito", sans-serif;
     font-style: normal;
     font-weight: 400;

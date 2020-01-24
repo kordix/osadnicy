@@ -31,6 +31,10 @@ Vue.component('resourcetab', require('./components/ResourceTab.vue').default);
 Vue.component('wioska', require('./components/Wioska.vue').default);
 Vue.component('hero', require('./components/Hero.vue').default);
 Vue.component('popover', require('./components/Popover.vue').default);
+Vue.component('building', require('./components/Building.vue').default);
+Vue.component('magazyn', require('./components/Magazyn.vue').default);
+
+
 
 
 
@@ -49,7 +53,12 @@ Vue.component('gra', require('./components/Gra.vue').default);
          dane:{stoneLevel:1,woodLevel:1,ironLevel:1},
          test:'test',
          coins:null,
-         log:''
+         log:'',
+         costs: {
+             woodUpgrade: [150, 100, 100],
+             ironUpgrade: [150, 100, 100],
+             stoneUpgrade: [100, 100, 100],
+         },
      },
      actions:{
          loadData(context){
