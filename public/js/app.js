@@ -1716,11 +1716,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['attr', 'width', 'height', 'left', 'top', 'type'],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    dane: "dane"
+    dane: "dane",
+    costs: "costs"
   }), {
     popheader: function popheader() {
       return 'Kopalnia ' + this.attr;
@@ -2157,11 +2160,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      // costs:{
-      //     woodUpgrade:[150,100,100],
-      //     ironUpgrade:[150,50,100],
-      //     stoneUpgrade:[100,100,100],
-      // },
       log: ''
     };
   },
@@ -38424,7 +38422,28 @@ var render = function() {
                 _vm._s(_vm.dane[_vm.attr + "Level"]) +
                 "  Produkcja: " +
                 _vm._s(_vm.dane[_vm.attr + "factor"] * 3600) +
-                "/h"
+                "/h\n     "
+            ),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.$parent.upgrade(_vm.attr)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "Upgrade (" +
+                    _vm._s(_vm.costs[_vm.attr + "Upgrade"][0]) +
+                    "D " +
+                    _vm._s(_vm.costs[_vm.attr + "Upgrade"][1]) +
+                    "K " +
+                    _vm._s(_vm.costs[_vm.attr + "Upgrade"][2]) +
+                    "Ż)"
+                )
+              ]
             )
           ])
         : _vm._e()

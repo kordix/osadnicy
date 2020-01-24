@@ -4,7 +4,9 @@
       class="building" :id="attr+'Mine'" style="height:100px;"
       v-bind:style="{ 'background-image': 'url(' + 'images/'+attr +dane[attr+'Level']+'.png)',left:left+'px',top:top+'px',width:width+'px'}"
     ></div>
-    <popover v-if="pop">Level: {{dane[attr+'Level']}}  Produkcja: {{dane[attr+'factor'] * 3600 }}/h</popover>
+    <popover v-if="pop">Level: {{dane[attr+'Level']}}  Produkcja: {{dane[attr+'factor'] * 3600 }}/h
+       <button @click="$parent.upgrade(attr)">Upgrade ({{costs[attr+'Upgrade'][0]}}D {{costs[attr+'Upgrade'][1]}}K {{costs[attr+'Upgrade'][2]}}Ż)</button>
+    </popover>
 
    
     
@@ -17,7 +19,8 @@ export default {
   props: ['attr','width','height','left','top','type'],
   computed: {
     ...mapState({
-      dane: "dane"
+      dane: "dane",
+      costs:"costs"
     }),
       popheader(){
       return 'Kopalnia '+this.attr;

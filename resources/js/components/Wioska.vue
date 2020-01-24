@@ -61,11 +61,6 @@ import { mapActions } from 'vuex';
 export default {
     data(){
         return {
-            // costs:{
-            //     woodUpgrade:[150,100,100],
-            //     ironUpgrade:[150,50,100],
-            //     stoneUpgrade:[100,100,100],
-            // },
             log:''
         }
     },
