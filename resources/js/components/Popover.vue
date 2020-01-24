@@ -12,7 +12,7 @@ export default {}
 
 <style scoped>
 .elem{
-    position: absolute;
+position: absolute;
 will-change: transform;
 top: 0px;
 left: 0px;
